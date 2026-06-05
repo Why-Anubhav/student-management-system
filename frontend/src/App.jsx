@@ -20,8 +20,7 @@ const getStudentData = async() => {
             <ul>
                 {students.map((student) =>(
                     <li key={student.id}>
-                        {student.name}
-                        {student.course}
+                        {student.name}-{student.course}
                     </li>
                 ))}
             </ul>
