@@ -3,7 +3,7 @@ import { useState } from "react";
 
 function App(){
     // {"id":1,"name":"Tushar","course":"MCA"}
-    const [ students,setStudent] = useState();
+    const [ students,setStudent] = useState([]);
 
 const getStudentData = async() => {
     const response = await fetch("http://localhost:8080/student");
@@ -16,10 +16,15 @@ const getStudentData = async() => {
             <button onClick={getStudentData}>
                 Get Student Data
             </button>
-            <h2>(students.name)</h2>
-            <h2>(students.course)</h2>
-            <h2>(students.id)</h2>
 
+            <ul>
+                {students.map((student) =>(
+                    <li key={student.id}>
+                        {student.name}
+                        {student.course}
+                    </li>
+                ))}
+            </ul>
 
         </div>
     )
