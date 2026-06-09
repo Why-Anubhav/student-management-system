@@ -25,8 +25,13 @@ const getStudentData = async() => {
                 ))}
             </ul>
 
+            <button onClick= {fetchTotalStudentCount}>
+                Get Total Student Count
+            </button>
+
+            <p>Total students: {count}</p>
+
         </div>
     )
 }
-
 export default App;
