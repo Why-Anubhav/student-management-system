@@ -8,12 +8,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
+import com.example.lms.service.StudentService;
+
+
+
 @RestController               //allows use of rest APIs 
 @RequestMapping("/student")  // maps request 
 @CrossOrigin(origins ="http://localhost:5173") // connect with frontend
 public class StudentController {
+        @Autowired
+        private StudentService service;
 
-@GetMapping
+    @GetMapping
     public ArrayList<Student> getStudents() {
         ArrayList<Student> students = new ArrayList<>();
 
@@ -42,4 +48,10 @@ public class StudentController {
                 Integer.class
         );
     }
+
+    @GetMapping("/message")
+    public String GetstudentInfo() {
+        return service.getStudentInfo();
+    }
+    
 }
