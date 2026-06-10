@@ -47,5 +47,15 @@ public class StudentController {
     public String GetstudentInfo() {
         return service.getStudentInfo();
     }
+
+    // @GetMapping
+    // public List<Student> getStudentsInfo() {
+    //     return service.getAllStudents();
+    // }
+
+    @PostMapping
+    public Student addStudent(@RequestBody Student student) {
+    return service.saveStudent(student);
+}
     
 }

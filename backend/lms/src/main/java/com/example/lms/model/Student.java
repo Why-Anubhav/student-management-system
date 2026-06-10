@@ -1,21 +1,30 @@
 package com.example.lms.model;
 
+import jakarta.persistence.*; //JPA import
+
+@Entity                     //Created to work with Hibernate
+@Table(name = "student")
+
+
 public class Student {
 
-    private int id;
+    @Id            // created primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    private Integer id;    //changed for int to integer
     private String name;
     private String course;
 
     public Student() {
     }
 
-    public Student(int id, String name, String course) {
+    public Student(Integer id, String name, String course) {
         this.id = id;
         this.name = name;
         this.course = course;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
