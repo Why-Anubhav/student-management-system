@@ -39,14 +39,8 @@ public class StudentController {
     JdbcTemplate jdbcTemplate;
 
     @GetMapping("/count")
-    public int countStudents() {
-
-        String sql = "SELECT COUNT(*) FROM students";
-
-        return jdbcTemplate.queryForObject(
-                sql,
-                Integer.class
-        );
+    public String countStudents() {
+        return service.getStudentCount();
     }
 
     @GetMapping("/message")
