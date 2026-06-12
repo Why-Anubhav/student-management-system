@@ -3,39 +3,38 @@ package com.example.lms.controller; // create package for global access
 
 import com.example.lms.model.Student;  // import according to model.name package
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.example.lms.service.StudentService;
 import com.example.lms.dto.StudentRequestDTO;
 import com.example.lms.dto.StudentResponseDTO;
 
-
-
 @RestController               //allows use of rest APIs 
 @RequestMapping("/student")  // maps request 
 @CrossOrigin(origins ="http://localhost:5173") // connect with frontend
 public class StudentController {
-        @Autowired
-        private StudentService service;
 
-    @GetMapping
-    public ArrayList<Student> getStudents() {
-        ArrayList<Student> students = new ArrayList<>();
+    private final StudentService service;
+    private final JdbcTemplate jdbcTemplate;
 
-        students.add(new Student(1, "Tushar", "MCA"));
-        students.add(new Student(2, "Rahul", "MCA"));
-        students.add(new Student(3, "Aman", "BTech"));
-
-        return students;
+    public StudentController(StudentService service, JdbcTemplate jdbcTemplate) {
+        this.service = service;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
-    @Autowired
-    JdbcTemplate jdbcTemplate;
+    // @GetMapping //Create and fetch hardcode data of students
+    // public ArrayList<Student> getStudents() {
+    //     ArrayList<Student> students = new ArrayList<>();
+    //     students.add(new Student(1, "Tushar", "MCA"));
+    //     students.add(new Student(2, "Rahul", "MCA"));
+    //     students.add(new Student(3, "Aman", "BTech"));
+    //     return students;
+    // }
+
 
     @GetMapping("/count")
     public String countStudents() {
@@ -47,15 +46,15 @@ public class StudentController {
         return service.getStudentInfo();
     }
 
-    // @GetMapping
-    // public List<Student> getStudentsInfo() {
-    //     return service.getAllStudents();
-    // }
-
-    @PostMapping
-    public Student addStudent(@RequestBody Student student) {
-    return service.saveStudent(student);
+    @GetMapping                     //Fetches all students info from database and return as list of student
+    public List<Student> getStudentsInfo() {
+        return service.getAllStudents();
     }
+
+    // @PostMapping
+    // public Student addStudent(@RequestBody Student student) {
+    // return service.saveStudent(student);
+    // }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getStudent(@PathVariable("id") Integer id) {       // ?--> returns any object doesnt specifically need all entity of student
@@ -76,5 +75,20 @@ public class StudentController {
     Student student = service.addStudent(dto);
     return ResponseEntity.ok(student);
     }
-    
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateStudent(@PathVariable("id") Integer id, @RequestBody StudentRequestDTO dto) {
+
+        Student student = service.updateStudent(id, dto);
+        return ResponseEntity.ok(student);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteStudent(@PathVariable("id") Integer id) {
+        String message = service.deleteStudent(id);
+    return ResponseEntity.ok(message);
+
+}
+
 }
